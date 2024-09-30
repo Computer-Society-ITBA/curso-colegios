@@ -1,10 +1,10 @@
-import styled from "styled-components"
-import colors from "../utils/colorPallete"
+import styled from "styled-components";
+import { useTheme } from "../utils/ThemeContext"; 
 
-const Header = styled.header`
-  background-color: ${colors.secondaryColor};
-  color: ${colors.primaryColor};
-  padding: 20px 0px 20px 0px;
+const StyledHeader = styled.header`
+  background-color: ${({ theme }) => theme.secondaryColor};
+  color: ${({ theme }) => theme.textPrimary};
+  padding: 20px 0;
   text-align: center;
   font-size: 24px;
   font-weight: bold;
@@ -14,5 +14,10 @@ const Header = styled.header`
   z-index: 1000;
 `;
 
+const Header = ({ children }) => {
+  const { colors } = useTheme(); 
+
+  return <StyledHeader theme={colors}>{children}</StyledHeader>;
+};
 
 export default Header;

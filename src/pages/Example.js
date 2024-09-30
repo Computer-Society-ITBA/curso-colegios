@@ -5,6 +5,9 @@ import Header from '../components/body/Header';
 import MainBody from '../components/body/MainBody';
 import ConversationCard from '../components/textOutput/conversationCard';
 import { BubbleContainer, SenderBubble, ReceiverBubble } from '../components/textOutput/MessageBubble';
+import { ThemeProvider } from '../components/utils/ThemeContext';
+import ColorPicker  from '../components/colorPickers/ColorPicker';
+
 
 const Example = () => {
 
@@ -12,7 +15,7 @@ const Example = () => {
     const [inputValue, setInputValue] = useState(""); 
     const conversationRef = useRef(null);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault(); 
       if (inputValue.trim()) {
         setMessages([...messages, { text: inputValue, isSender: true }]);
@@ -27,8 +30,11 @@ const Example = () => {
       }, [messages]);
 
     return(
+      <ThemeProvider>
         <MainBody>
             <Header>Hola mundo</Header>
+            <div style={{display:'flex',justifyContent:'flex-start', gap:'20px', width:'100%', height:'100%', alignItems:'center'}}>
+            <ColorPicker/>
             <ConversationCard ref={conversationRef}>
         {messages.length === 0 ? (
           <p>No messages yet.</p>
@@ -40,6 +46,7 @@ const Example = () => {
           ))
         )}
       </ConversationCard >
+      </div>
             <FormContainer onSubmit={handleSubmit}>
             <InputField
           type="text"
@@ -50,6 +57,7 @@ const Example = () => {
                 <SubmitButton type="submit">Submit</SubmitButton>
             </FormContainer>
        </MainBody>
+       </ThemeProvider>
     );
 };
 

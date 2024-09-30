@@ -5,7 +5,7 @@ const colors = {
     secondaryButtonHover: '#1C9D94',
     primaryColor: '#F9F9F9',
     secondaryColor: '#A57BC2',
-    textPrimary: '#2C3E50',
+    textPrimary: '#FFFFFF',
     textSecondary: '#7F8C8D',
     accentColor: '#008080',
     cardPrimary: '#FFFFFF'

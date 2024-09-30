@@ -1,4 +1,4 @@
-import colors from "../utils/colorPallete";
+import { useTheme } from "../utils/ThemeContext";
 import styled from "styled-components";
 
 const BubbleContainer = styled.div`
@@ -17,18 +17,33 @@ const BubbleBase = styled.div`
   border-radius: 15px;
 `;
 
-const SenderBubble = styled(BubbleBase)`
-  background-color: ${colors.primaryButton}; 
-  border-radius: 15px 15px 0 15px; 
-  margin-left: auto; 
-  margin-right: 15px;
-`;
+const SenderBubble = (props) => {
+  const { colors } = useTheme();
 
-const ReceiverBubble = styled(BubbleBase)`
-  background-color: ${colors.secondaryColor}; 
-  border-radius: 15px 15px 15px 0; 
-  margin-right: auto; 
-  margin-left: 15px;
-`;
+  const StyledSenderBubble = styled(BubbleBase)`
+    background-color: ${colors.primaryButton}; 
+    color: ${colors.textPrimary};
+    border-radius: 15px 15px 0 15px; 
+    margin-left: auto; 
+    margin-right: 15px;
+  `;
+
+  return <StyledSenderBubble {...props} />;
+};
+
+
+const ReceiverBubble = (props) => {
+  const { colors } = useTheme(); 
+
+  const StyledReceiverBubble = styled(BubbleBase)`
+    background-color: ${colors.secondaryColor}; 
+        color: ${colors.textPrimary};
+    border-radius: 15px 15px 15px 0; 
+    margin-right: auto; 
+    margin-left: 15px;
+  `;
+
+  return <StyledReceiverBubble {...props} />;
+};
 
 export {BubbleContainer, SenderBubble, ReceiverBubble}

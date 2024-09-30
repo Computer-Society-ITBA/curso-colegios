@@ -1,17 +1,23 @@
-import colors from "../utils/colorPallete";
 import styled from "styled-components";
+import { useTheme } from "../utils/ThemeContext";
 
-const conversationCard = styled.div`
-    background-color: ${colors.cardPrimary};
+const StyledConversationCard = styled.div`
+    background-color: ${({ theme }) => theme.cardPrimary};
     border: none;
     border-radius: 8px;
-    margin-top: 20px;
+    margin-right:10px;
     width: 80%;
-    height: 100%;
+    height: 95%;
     position: relative;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     text-align: center;
     overflow-y: auto;
 `;
 
-export default conversationCard;
+const ConversationCard = (props) => {
+    const { colors } = useTheme();
+
+    return <StyledConversationCard theme={colors} {...props} />;
+};
+
+export default ConversationCard;
