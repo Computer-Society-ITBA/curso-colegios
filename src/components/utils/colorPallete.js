@@ -6,7 +6,7 @@ const colors = {
     primaryColor: '#F9F9F9',
     secondaryColor: '#A57BC2',
     textPrimary: '#FFFFFF',
-    textSecondary: '#7F8C8D',
+    textSecondary: '#36454F',
     accentColor: '#008080',
     cardPrimary: '#FFFFFF'
 };

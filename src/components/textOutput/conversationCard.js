@@ -10,8 +10,6 @@ const StyledConversationCard = styled.div`
     height: 95%;
     position: relative;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    overflow-y: auto;
 `;
 
 const ConversationCard = (props) => {
