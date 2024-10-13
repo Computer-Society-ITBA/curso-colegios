@@ -15,6 +15,8 @@ const Example = () => {
   const listRef = useRef();
   const rowHeights = useRef({});
 
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault(); 
     if (inputValue.trim()) {
@@ -22,7 +24,6 @@ const Example = () => {
       setInputValue("");
     }
   };
-
 
   const getRowHeight = useCallback((index) => {
     return rowHeights.current[index] ? rowHeights.current[index] + 20 : 100;
