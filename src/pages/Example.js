@@ -24,6 +24,13 @@ const Example = () => {
       setInputValue("");
     }
   };
+    const handleImageLoad = (index) => {
+      setMessages((prevMessages) => {
+        const updatedMessages = [...prevMessages];
+        updatedMessages[index].imageLoaded = true;
+        return updatedMessages;
+      });
+    };
 
   const getRowHeight = useCallback((index) => {
     return rowHeights.current[index] ? rowHeights.current[index] + 20 : 100;
@@ -33,13 +40,15 @@ const Example = () => {
     const msg = messages[index];
     const rowRef = useRef();
 
+
+
     useEffect(() => {
       if (rowRef.current) {
         const height = rowRef.current.getBoundingClientRect().height;
         rowHeights.current[index] = height;
         listRef.current.resetAfterIndex(index);
       }
-    }, [index, msg]);
+    }, [index, msg, msg.imageLoaded]);
 
     return (
       <div style={style}>
@@ -48,7 +57,7 @@ const Example = () => {
             {msg.isSender ? (
               <SenderBubble>{msg.text}</SenderBubble>
             ) : (
-              <ReceiverBubble content={msg.text} imageBytes={msg.imageBytes} />
+              <ReceiverBubble content={msg.text} imageBytes={msg.imageBytes} handleLoad={() => handleImageLoad(index)}/>
             )}
           </BubbleContainer>
         </div>

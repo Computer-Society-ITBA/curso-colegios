@@ -71,7 +71,7 @@ const SenderBubble = memo((props) => {
   return <StyledSenderBubble theme={colors} {...props} />;
 });
 
-const ReceiverBubble = memo(({ content, imageBytes }) => {
+const ReceiverBubble = memo(({ content, imageBytes, handleLoad }) => {
   const { colors } = useTheme();
 
   const bytesToBase64 = (bytes) => {
@@ -95,7 +95,7 @@ const ReceiverBubble = memo(({ content, imageBytes }) => {
         </ReactMarkdown>;
       }
     } else if (imageBytes) {
-      return <img src={bytesToBase64(imageBytes)} alt="Response" />;
+      return <img src={bytesToBase64(imageBytes)} onLoad={handleLoad} alt="Response" />;
     }
     return null;
   };
