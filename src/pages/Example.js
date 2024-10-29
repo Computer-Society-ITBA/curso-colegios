@@ -8,6 +8,8 @@ import { ThemeProvider } from '../components/utils/ThemeContext';
 import ColorPicker from '../components/colorPickers/ColorPicker';
 import { VariableSizeList as List } from 'react-window';  
 import ConversationCard from '../components/textOutput/conversationCard';
+import { CHATBOT_URL } from '../services/apiStore';
+import axios from 'axios';
 
 const Example = () => {
   const [messages, setMessages] = useState([]);
@@ -15,15 +17,37 @@ const Example = () => {
   const listRef = useRef();
   const rowHeights = useRef({});
 
-  
+  let RESPONSE_ID = 0;
+  const personality = 'default';
 
   const handleSubmit = async (e) => {
     e.preventDefault(); 
     if (inputValue.trim()) {
-      setMessages([...messages, { text: inputValue, isSender: true, imageBytes: null }]);
+      setMessages([...messages, { text: inputValue, isSender: true}]);
       setInputValue("");
+
+      try {
+        const response = await axios.post('/chat', {
+            ID: (RESPONSE_ID++).toString(),
+            personality: personality, 
+            message: inputValue     
+        });
+
+        const { responseType, content } = response.data;
+
+        if (responseType === 'TEXT') {
+            setMessages(prevMessages => [...prevMessages, { content: content, isSender: false, responseType: responseType }]);
+        } else if (responseType === 'IMAGE') {
+            setMessages(prevMessages => [...prevMessages, { content: content, isSender: false, responseType: responseType }]);
+        } else if (responseType === 'AUDIO') {
+            setMessages(prevMessages => [...prevMessages, { content: content, isSender: false, responseType: responseType }]);
+        }
+    } catch (error) {
+        console.error('Error sending message:', error);
+    }
     }
   };
+
     const handleImageLoad = (index) => {
       setMessages((prevMessages) => {
         const updatedMessages = [...prevMessages];
@@ -57,7 +81,7 @@ const Example = () => {
             {msg.isSender ? (
               <SenderBubble>{msg.text}</SenderBubble>
             ) : (
-              <ReceiverBubble content={msg.text} imageBytes={msg.imageBytes} handleLoad={() => handleImageLoad(index)}/>
+              <ReceiverBubble content={msg.content} responseType={msg.responseType} handleLoad={() => handleImageLoad(index)}/>
             )}
           </BubbleContainer>
         </div>

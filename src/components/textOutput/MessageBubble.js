@@ -71,36 +71,33 @@ const SenderBubble = memo((props) => {
   return <StyledSenderBubble theme={colors} {...props} />;
 });
 
-const ReceiverBubble = memo(({ content, imageBytes, handleLoad }) => {
+const ReceiverBubble = memo(({ content, handleLoad, responseType }) => {
   const { colors } = useTheme();
 
-  const bytesToBase64 = (bytes) => {
-    const binary = String.fromCharCode(...bytes);
-    return `data:image/png;base64,${btoa(binary)}`;
-  };
-
   const renderContent = () => {
-    if (typeof content === 'string') {
-      if (content.startsWith('data:image/')) {
-        return <img src={content} alt="Response" />;
-      } else {
-        return <ReactMarkdown
-          components={{
-            p: 'span',
-            h1: 'strong',
-            img: 'img',
-          }}
-        >
+    if (responseType === 'IMAGE') {
+      return <img src={content} onLoad={handleLoad} alt="Response" />;
+    } 
+    else if (responseType === 'AUDIO') {
+      return (
+        <audio controls>
+          <source src={content} type="audio/mpeg" />
+          El browser no soporta el formato de audio!
+        </audio>
+      );
+    } 
+    else if (responseType === 'TEXT') {
+      return (
+        <ReactMarkdown components={{ p: 'span', h1: 'strong', img: 'img' }}>
           {content}
-        </ReactMarkdown>;
-      }
-    } else if (imageBytes) {
-      return <img src={bytesToBase64(imageBytes)} onLoad={handleLoad} alt="Response" />;
+        </ReactMarkdown>
+      );
     }
     return null;
   };
 
   return <StyledReceiverBubble theme={colors}>{renderContent()}</StyledReceiverBubble>;
 });
+
 
 export { BubbleContainer, SenderBubble, ReceiverBubble };
