@@ -8,53 +8,55 @@ import { ThemeProvider } from '../components/utils/ThemeContext';
 import ColorPicker from '../components/colorPickers/ColorPicker';
 import { VariableSizeList as List } from 'react-window';  
 import ConversationCard from '../components/textOutput/conversationCard';
-import { CHATBOT_URL } from '../services/apiStore';
 import axios from 'axios';
 
 const Example = () => {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([{content: 'Hola, soy un chatbot. ¿Como quieres que sea mi personalidad?', isSender: false, responseType: 'TEXT'}]);
   const [inputValue, setInputValue] = useState(""); 
+  const [personality, setPersonality] = useState('default');
   const listRef = useRef();
   const rowHeights = useRef({});
+  const isFirstMessage = useRef(true);
 
   let RESPONSE_ID = 0;
-  const personality = 'default';
 
   const handleSubmit = async (e) => {
     e.preventDefault(); 
     if (inputValue.trim()) {
-      setMessages([...messages, { text: inputValue, isSender: true}]);
+      setMessages([...messages, { text: inputValue, isSender: true }]);
       setInputValue("");
 
       try {
+        if (isFirstMessage.current) {
+          setPersonality(inputValue);
+          isFirstMessage.current = false;
+        }
+
         const response = await axios.post('/chat', {
-            ID: (RESPONSE_ID++).toString(),
-            personality: personality, 
-            message: inputValue     
+          ID: (RESPONSE_ID++).toString(),
+          personality: personality,
+          message: inputValue
         });
 
         const { responseType, content } = response.data;
 
-        if (responseType === 'TEXT') {
-            setMessages(prevMessages => [...prevMessages, { content: content, isSender: false, responseType: responseType }]);
-        } else if (responseType === 'IMAGE') {
-            setMessages(prevMessages => [...prevMessages, { content: content, isSender: false, responseType: responseType }]);
-        } else if (responseType === 'AUDIO') {
-            setMessages(prevMessages => [...prevMessages, { content: content, isSender: false, responseType: responseType }]);
-        }
-    } catch (error) {
+        setMessages(prevMessages => [
+          ...prevMessages, 
+          { content: content, isSender: false, responseType: responseType }
+        ]);
+      } catch (error) {
         console.error('Error sending message:', error);
-    }
+      }
     }
   };
 
-    const handleImageLoad = (index) => {
-      setMessages((prevMessages) => {
-        const updatedMessages = [...prevMessages];
-        updatedMessages[index].imageLoaded = true;
-        return updatedMessages;
-      });
-    };
+  const handleImageLoad = (index) => {
+    setMessages((prevMessages) => {
+      const updatedMessages = [...prevMessages];
+      updatedMessages[index].imageLoaded = true;
+      return updatedMessages;
+    });
+  };
 
   const getRowHeight = useCallback((index) => {
     return rowHeights.current[index] ? rowHeights.current[index] + 20 : 100;
@@ -63,8 +65,6 @@ const Example = () => {
   const Row = ({ index, style }) => {
     const msg = messages[index];
     const rowRef = useRef();
-
-
 
     useEffect(() => {
       if (rowRef.current) {
@@ -81,7 +81,7 @@ const Example = () => {
             {msg.isSender ? (
               <SenderBubble>{msg.text}</SenderBubble>
             ) : (
-              <ReceiverBubble content={msg.content} responseType={msg.responseType} handleLoad={() => handleImageLoad(index)}/>
+              <ReceiverBubble content={msg.content} responseType={msg.responseType} handleLoad={() => handleImageLoad(index)} />
             )}
           </BubbleContainer>
         </div>
@@ -93,12 +93,12 @@ const Example = () => {
     <ThemeProvider>
       <MainBody>
         <Header>Hola mundo</Header>
-        <div style={{display:'flex', justifyContent:'flex-start', gap:'20px', width:'100%', height:'100%', alignItems:'center'}}>
+        <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '20px', width: '100%', height: '100%', alignItems: 'center' }}>
           <ColorPicker />
           <ConversationCard>
             <List
-              height={700}  
-              itemCount={messages.length}  
+              height={700}
+              itemCount={messages.length}
               itemSize={getRowHeight}
               width={'100%'}
               ref={listRef}
@@ -112,8 +112,8 @@ const Example = () => {
           <InputField
             type="text"
             placeholder="Enter your text here"
-            value={inputValue} 
-            onChange={(e) => setInputValue(e.target.value)} 
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
           />
           <SubmitButton type="submit">Submit</SubmitButton>
         </FormContainer>

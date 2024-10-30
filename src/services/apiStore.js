@@ -41,6 +41,13 @@ router.post('/chat', async (req, res) => {
                 content: `data:image/png;base64,${imageBase64}`
             });
             }
+        } else if (responseType === 'AUDIO') { 
+            //audio
+            const audioBase64 = Buffer.from(body).toString('base64');
+            const audioDataUri = `data:audio/mpeg;base64,${audioBase64}`;
+            res.json({
+                responseType: 'AUDIO',
+                content: audioDataUri});
         } else {
             //default para que no explote
             res.status(400).json({
@@ -48,6 +55,7 @@ router.post('/chat', async (req, res) => {
                 responseType: 'TEXT'
             });
         }
+    
     } catch (error) {
         console.error('Error al comunicarse con el chatbot:', error);
         res.status(500).json({ error: 'Error al comunicarse con el chatbot' });
@@ -68,8 +76,9 @@ router.post('/text-to-speech', async (req, res) => {
             responseType: 'arraybuffer'
         });
 
-        const audioBase64 = Buffer.from(response.data).toString('base64');
-        const audioDataUri = `data:audio/mpeg;base64,${audioBase64}`;
+        const jsonResponse = Buffer.from(response.data).toString('base64');
+        const { responseType, body } = JSON.parse(jsonResponse);
+        const audioDataUri = `data:audio/mpeg;base64,${body}`;
  
         res.json({
             responseType: 'AUDIO',
