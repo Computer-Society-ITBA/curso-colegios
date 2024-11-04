@@ -32,7 +32,7 @@ const Example = () => {
           isFirstMessage.current = false;
         }
 
-        const response = await axios.post('/chat', {
+        const response = await axios.post('http://localhost:3000/chat', {
           ID: (RESPONSE_ID++).toString(),
           personality: personality,
           message: inputValue
