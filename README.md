@@ -2,7 +2,7 @@
 En este instructivo se va a mostrar cómo crear una aplicación desde cero usando React.
 En particular, se utiliza Javascript con algunos paquetes como React, Axios, Express, entre otros.
 
-La principal funcionalidad de este Chatbot es poder comunicarse con OpenAI para poder tener un comportamiento simil ChatGTP.
+La principal funcionalidad de este Chatbot es poder comunicarse con OpenAI para poder tener un comportamiento simil ChatGPT.
 Para ello, se tendrá que crear una aplicación de React, e ir generando funcionalidades paso a paso hasta poder tener algo completamente funcional.
 
 ### React
