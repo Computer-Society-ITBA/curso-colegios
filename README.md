@@ -699,7 +699,7 @@ const Example = () => {
                             {msg.isSender ? ( <><SenderBubble>{msg.text}</SenderBubble> <ReceiverBubble>...</ReceiverBubble></> ) : ( <ReceiverBubble>{msg.text}</ReceiverBubble>)}
 // ------------------------------------------------------------------------------------------------------------------------------------------
 // AGREGO +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                            {msg.isSender ? ( <><SenderBubble>{msg.text}</SenderBubble> : ( <ReceiverBubble>{msg.text}</ReceiverBubble>)}
+                            {msg.isSender ? ( <SenderBubble>{msg.text}</SenderBubble> ): ( <ReceiverBubble>{msg.text}</ReceiverBubble>)}
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                         </BubbleContainer>
                     ))
@@ -947,7 +947,7 @@ const Example = () => {
                 ) : (
                     messages.map((msg, index) => (
                         <BubbleContainer key={index}>
-                            {msg.isSender ? ( <><SenderBubble>{msg.text}</SenderBubble> <ReceiverBubble>...</ReceiverBubble></> ) : ( <ReceiverBubble>{msg.text}</ReceiverBubble>)}
+                            {msg.isSender ? ( <SenderBubble>{msg.text}</SenderBubble> ) : ( <ReceiverBubble>{msg.text}</ReceiverBubble>)}
                         </BubbleContainer>
                     ))
                 )}
