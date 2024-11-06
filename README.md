@@ -603,15 +603,15 @@ app.post('/chat', async (req, res) => {
             responseType: 'arraybuffer'
         });
         //casting a str
-        const jsonResponse = Buffer.from(response.data).toString('utf-8');
-        const { contentType, content } = JSON.parse(jsonResponse);
-        if (contentType === 'TEXT') {
+        const stringResponse = Buffer.from(response.data).toString('utf-8');
+        const jsonResponse = JSON.parse(stringResponse);
+        if (jsonResponse.hasOwnProperty('contentType') && jsonResponse.contentType === 'TEXT') {
             //texto o markdown
             res.json({
                 responseType: 'TEXT',
-                content: content
+                content: jsonResponse.content
             });
-        } else if (contentType === 'IMAGE') {
+        } else if (jsonResponse.hasOwnProperty('responseType') && jsonResponse.responseType === 'IMAGE') {
             res.json({
                 content: 'No tengo la capacidad de mostrar imágenes todavía',
                 responseType: 'IMAGE'
@@ -792,7 +792,7 @@ const StyledReceiverBubble = styled(BubbleBase)`
     font-family: inherit;
   }
   img {
-    max-width: 100%;
+    max-width: 400px;
     border-radius: 15px;
   }
   pre {
@@ -1002,32 +1002,32 @@ app.post('/chat', async (req, res) => {
             responseType: 'arraybuffer'
         });
         //casting a str
-        const jsonResponse = Buffer.from(response.data).toString('utf-8');
-        const { contentType, content } = JSON.parse(jsonResponse);
-        if (contentType === 'TEXT') {
+        const stringResponse = Buffer.from(response.data).toString('utf-8');
+        const jsonResponse = JSON.parse(stringResponse);
+        if (jsonResponse.hasOwnProperty('contentType') && jsonResponse.contentType === 'TEXT') {
             //texto o markdown
             res.json({
                 responseType: 'TEXT',
-                content: content
+                content: jsonResponse.content
             });
 // BORRO ------------------------------------------------------------------
-        } else if (contentType === 'IMAGE') {
+        } else if (jsonResponse.hasOwnProperty('responseType') && jsonResponse.responseType === 'IMAGE') {
             res.json({
                 content: 'No tengo la capacidad de mostrar imágenes todavía',
                 responseType: 'IMAGE'
             });
 // ------------------------------------------------------------------------
 // AGREGO +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        } else if (contentType === 'IMAGE') {
+        } else if (jsonResponse.hasOwnProperty('responseType') && jsonResponse.responseType === 'IMAGE') {
             //url
-            if(typeof body === 'string' && content.startsWith('http')){
+            if(typeof jsonResponse.body === 'string' && jsonResponse.body.startsWith('http')){
                 res.json({
                     responseType: 'IMAGE',
-                    content: content
+                    content: jsonResponse.body
                 });
             } else {
             //base64
-                const imageBase64 = Buffer.from(content).toString('base64');
+                const imageBase64 = Buffer.from(jsonResponse.body).toString('base64');
                 res.json({
                     responseType: 'IMAGE',
                     content: `data:image/png;base64,${imageBase64}`
@@ -1215,24 +1215,24 @@ app.post('/chat', async (req, res) => {
             responseType: 'arraybuffer'
         });
         //casting a str
-        const jsonResponse = Buffer.from(response.data).toString('utf-8');
-        const { contentType, content } = JSON.parse(jsonResponse);
-        if (contentType === 'TEXT') {
+        const stringResponse = Buffer.from(response.data).toString('utf-8');
+        const jsonResponse = JSON.parse(stringResponse);
+        if (jsonResponse.hasOwnProperty('contentType') && jsonResponse.contentType === 'TEXT') {
             //texto o markdown
             res.json({
                 responseType: 'TEXT',
-                content: content
+                content: jsonResponse.content
             });
-        } else if (contentType === 'IMAGE') {
+        } else if (jsonResponse.hasOwnProperty('responseType') && jsonResponse.responseType === 'IMAGE') {
             //url
-            if(typeof content === 'string' && content.startsWith('http')){
+            if(typeof jsonResponse.body === 'string' && jsonResponse.body.startsWith('http')){
                 res.json({
                     responseType: 'IMAGE',
-                    content: content
+                    content: jsonResponse.body
                 });
             } else {
             //base64
-                const imageBase64 = Buffer.from(content).toString('base64');
+                const imageBase64 = Buffer.from(jsonResponse.body).toString('base64');
                 res.json({
                     responseType: 'IMAGE',
                     content: `data:image/png;base64,${imageBase64}`
@@ -1332,7 +1332,7 @@ const StyledReceiverBubble = styled(BubbleBase)`
     font-family: inherit;
   }
   img {
-    max-width: 100%;
+    max-width: 400px;
     border-radius: 15px;
   }
   pre {
