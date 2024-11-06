@@ -587,7 +587,7 @@ const cors = require('cors')
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-const CHATBOT_URL = 'https://apicursocolegios.calmglacier-4e27b0b4.brazilsouth.azurecontainerapps.io';
+const CHATBOT_URL = 'https://apicursocolegiosv2.calmglacier-4e27b0b4.brazilsouth.azurecontainerapps.io';
 
 app.use(express.json());
 app.use(cors());
@@ -986,7 +986,7 @@ const cors = require('cors')
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-const CHATBOT_URL = 'https://apicursocolegios.calmglacier-4e27b0b4.brazilsouth.azurecontainerapps.io';
+const CHATBOT_URL = 'https://apicursocolegiosv2.calmglacier-4e27b0b4.brazilsouth.azurecontainerapps.io';
 
 app.use(express.json());
 app.use(cors());
@@ -1199,7 +1199,7 @@ const cors = require('cors')
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-const CHATBOT_URL = 'https://apicursocolegios.calmglacier-4e27b0b4.brazilsouth.azurecontainerapps.io';
+const CHATBOT_URL = 'https://apicursocolegiosv2.calmglacier-4e27b0b4.brazilsouth.azurecontainerapps.io';
 
 app.use(express.json());
 app.use(cors());
