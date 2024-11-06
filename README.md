@@ -1263,7 +1263,7 @@ app.post('/text-to-speech', async (req, res) => {
         }, {
             responseType: 'arraybuffer'
         });
-        const audioData64 = Buffer.from(content).toString('base64');
+        const audioData64 = Buffer.from(response.data).toString('base64');
         const audioDataUri = `data:audio/ogg;base64,${audioData64}`;
 
         res.json({
