@@ -672,7 +672,7 @@ const Example = () => {
                 message: inputValue
             });
             const { responseType, content } = response.data;
-            setMessages(prevMessages => [...prevMessages, { content: content, isSender: false, responseType: responseType }]);
+            setMessages(prevMessages => [...prevMessages, { text: content, isSender: false, responseType: responseType }]);
         } catch (error) {
             console.error('Error sending message:', error);
         }
@@ -695,7 +695,12 @@ const Example = () => {
                 ) : (
                     messages.map((msg, index) => (
                         <BubbleContainer key={index}>
-                            {msg.isSender ? ( <><SenderBubble>{msg.text}</SenderBubble> <ReceiverBubble>...</ReceiverBubble></> ) : ( <ReceiverBubble>{msg.content}</ReceiverBubble>)}
+// BORRO -------------------------------------------------------------------------------------------------------------------------------------
+                            {msg.isSender ? ( <><SenderBubble>{msg.text}</SenderBubble> <ReceiverBubble>...</ReceiverBubble></> ) : ( <ReceiverBubble>{msg.text}</ReceiverBubble>)}
+// ------------------------------------------------------------------------------------------------------------------------------------------
+// AGREGO +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                            {msg.isSender ? ( <><SenderBubble>{msg.text}</SenderBubble> : ( <ReceiverBubble>{msg.text}</ReceiverBubble>)}
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                         </BubbleContainer>
                     ))
                 )}
@@ -879,7 +884,7 @@ const Example = () => {
                 message: inputValue
             });
             const { responseType, content } = response.data;
-            setMessages(prevMessages => [...prevMessages, { content: content, isSender: false, responseType: responseType }]);
+            setMessages(prevMessages => [...prevMessages, { text: content, isSender: false, responseType: responseType }]);
         } catch (error) {
             console.error('Error sending message:', error);
         }
@@ -923,7 +928,7 @@ const Example = () => {
                         {msg.isSender ? (
                             <SenderBubble>{msg.text}</SenderBubble>
                         ) : (
-                            <ReceiverBubble content={msg.content} responseType={msg.responseType} handleLoad={() => handleImageLoad(index)}/>
+                            <ReceiverBubble content={msg.text} responseType={msg.responseType} handleLoad={() => handleImageLoad(index)}/>
                         )}
                     </BubbleContainer>
                 </div>
@@ -1100,7 +1105,7 @@ const Example = () => {
             });
             const { contentType, content } = response.data;
             if (contentType === 'TEXT') {
-                setMessages(prevMessages => [...prevMessages, { content: content, isSender: false, responseType: contentType }]);
+                setMessages(prevMessages => [...prevMessages, { text: content, isSender: false, responseType: contentType }]);
             }
         } catch (error) {
             console.error('Error sending message:', error);
@@ -1136,7 +1141,7 @@ const Example = () => {
                         {msg.isSender ? (
                             <SenderBubble>{msg.text}</SenderBubble>
                         ) : (
-                            <ReceiverBubble content={msg.content} responseType={msg.responseType} handleLoad={() => handleImageLoad(index)}/>
+                            <ReceiverBubble content={msg.text} responseType={msg.responseType} handleLoad={() => handleImageLoad(index)}/>
                         )}
                     </BubbleContainer>
                 </div>
@@ -1421,7 +1426,7 @@ const Example = () => {
                 message: inputValue
             });
             const { responseType, content } = response.data;
-            setMessages(prevMessages => [...prevMessages, { content: content, isSender: false, responseType: responseType }]);
+            setMessages(prevMessages => [...prevMessages, { text: content, isSender: false, responseType: responseType }]);
         } catch (error) {
             console.error('Error sending message:', error);
         }
@@ -1440,7 +1445,7 @@ const Example = () => {
                 message: inputValue
             });
             const { responseType, content } = response.data;
-            setMessages(prevMessages => [...prevMessages, { content: content, isSender: false, responseType: responseType }]);
+            setMessages(prevMessages => [...prevMessages, { text: content, isSender: false, responseType: responseType }]);
         } catch (error) {
             console.error('Error sending message:', error);
         }
